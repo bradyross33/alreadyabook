@@ -18,22 +18,27 @@ export default async function handler(req, res) {
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
     const { email, userAnswers, ...anthropicBody } = body;
 
-    // Subscribe to Kit
+    // Subscribe to Kit using v3 API
     if (email) {
       const kitApiKey = process.env.KIT_API_KEY;
       if (kitApiKey) {
-        await fetch('https://api.kit.com/v4/forms/9458646/subscribers', {
+        await fetch('https://api.convertkit.com/v3/forms/9458646/subscribe', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Kit-Api-Key': kitApiKey
-          },
-          body: JSON.stringify({ email_address: email })
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            api_key: kitApiKey,
+            email: email
+          })
         });
       }
     }
 
-    // Call Anthropic
+    // Fix model string and call Anthropic
+    const fixedBody = {
+      ...anthropicBody,
+      model: 'claude-sonnet-4-5'
+    };
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -41,7 +46,7 @@ export default async function handler(req, res) {
         'x-api-key': apiKey,
         'anthropic-version': '2023-06-01',
       },
-      body: JSON.stringify(anthropicBody),
+      body: JSON.stringify(fixedBody),
     });
 
     const data = await response.json();
@@ -118,7 +123,7 @@ export default async function handler(req, res) {
           'Authorization': `Bearer ${resendKey}`,
         },
         body: JSON.stringify({
-          from: 'Already a Book <noreply@alreadyabook.com>',
+          from: 'Already a Book <noreply@planmybook.com>',
           to: 'brady@bradyross.com',
           subject: `New Already a Book submission${email ? ' from ' + email : ''}`,
           html: `<div style="${baseStyle}">${answersHtml}${planHtml}${footer}</div>`,
@@ -134,7 +139,7 @@ export default async function handler(req, res) {
             'Authorization': `Bearer ${resendKey}`,
           },
           body: JSON.stringify({
-            from: 'Already a Book <noreply@alreadyabook.com>',
+            from: 'Already a Book <noreply@planmybook.com>',
             to: email,
             subject: 'Your book plan is here',
             html: `<div style="${baseStyle}">
