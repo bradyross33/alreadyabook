@@ -1,0 +1,9 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#f7f4ef"/>
+  <rect x="0" y="0" width="6" height="630" fill="#b8883a"/>
+  <text x="80" y="200" font-family="Georgia, serif" font-size="72" font-weight="700" fill="#1a1714">You already have</text>
+  <text x="80" y="290" font-family="Georgia, serif" font-size="72" font-weight="700" font-style="italic" fill="#b8883a">a book.</text>
+  <text x="80" y="370" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="28" fill="#6a6058">Most podcasters, bloggers, and newsletter writers</text>
+  <text x="80" y="410" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="28" fill="#6a6058">don't realize it. This free tool helps you find it.</text>
+  <text x="80" y="530" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="20" letter-spacing="3" fill="#b8883a">A FREE TOOL FROM AMPLIFY AUTHENTIC</text>
+</svg>
