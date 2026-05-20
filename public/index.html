@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Already a Book</title>
+<meta name="description" content="Most podcasters, bloggers, and newsletter writers are already sitting on a book. This free tool helps you find it.">
+<meta property="og:title" content="You already have a book.">
+<meta property="og:description" content="Most podcasters, bloggers, and newsletter writers don't realize it. This free tool helps you find it.">
+<meta property="og:url" content="https://alreadyabook.com">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://alreadyabook.com/preview.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="You already have a book.">
+<meta name="twitter:description" content="Most podcasters, bloggers, and newsletter writers don't realize it. This free tool helps you find it.">
+<meta name="twitter:image" content="https://alreadyabook.com/preview.svg">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:#f7f4ef;color:#1a1714;font-family:'DM Sans',sans-serif;min-height:100vh;}
+.app{max-width:680px;margin:0 auto;padding:36px 32px 80px;min-height:100vh;display:flex;flex-direction:column;}
+.screen{display:none;flex-direction:column;flex:1;}
+.screen.active{display:flex;}
+#landing{align-items:center;justify-content:center;text-align:center;padding:48px 0 32px;}
+.landing-badge{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a6f4a;border:1px solid #d4b87d;padding:7px 18px;border-radius:100px;margin-bottom:48px;display:inline-block;background:#fdf6ea;}
+.landing-headline{font-family:'Playfair Display',serif;font-size:60px;line-height:1.05;color:#1a1714;font-weight:700;letter-spacing:-0.01em;}
+.landing-headline em{color:#b8883a;font-style:italic;font-weight:700;}
+.landing-sub{font-size:17px;color:#6a6058;line-height:1.7;margin-top:24px;max-width:420px;}
+.landing-sub2{font-size:17px;color:#8a7d72;line-height:1.7;margin-top:8px;margin-bottom:48px;max-width:420px;}
+.btn-amber{background:#b8883a;border:none;color:#ffffff;font-size:16px;font-weight:500;padding:20px 40px;border-radius:12px;cursor:pointer;font-family:'DM Sans',sans-serif;display:block;width:100%;max-width:460px;transition:background 0.18s,box-shadow 0.18s;}
+.btn-amber:hover{background:#cb9a48;box-shadow:0 0 0 4px rgba(184,136,58,0.18);}
+.progress-wrap{margin-bottom:52px;padding-top:8px;}
+.progress-top{margin-bottom:10px;}
+.progress-label{font-size:11px;color:#a09080;letter-spacing:0.12em;text-transform:uppercase;}
+.progress-bar{width:100%;height:2px;background:#e8e0d4;}
+.progress-fill{height:100%;background:#b8883a;transition:width 0.4s ease;}
+.q-text{font-family:'Playfair Display',serif;font-size:36px;line-height:1.15;color:#1a1714;margin-bottom:12px;font-weight:400;}
+.q-sub{font-size:15px;color:#8a7d72;line-height:1.7;margin-bottom:36px;}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px;}
+.chip{padding:11px 22px;border:1.5px solid #d4c8b8;border-radius:100px;font-size:14px;color:#4a4038;cursor:pointer;background:#ffffff;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
+.chip:hover{border-color:#b8883a;color:#1a1714;}
+.chip.selected{border-color:#b8883a;color:#1a1714;background:#fdf6ea;}
+.radio-cards{display:flex;flex-direction:column;gap:10px;margin-bottom:36px;}
+.radio-card{padding:20px 24px;border:1.5px solid #e8e0d4;border-radius:14px;cursor:pointer;background:#ffffff;transition:all 0.15s;}
+.radio-card:hover{border-color:#d4b87d;background:#fdfaf5;}
+.radio-card.selected{border-color:#b8883a;background:#fdf6ea;}
+.rc-title{font-size:15px;color:#1a1714;margin-bottom:4px;font-weight:500;}
+.rc-sub{font-size:13px;color:#8a7d72;line-height:1.55;}
+textarea{width:100%;background:#ffffff;border:1.5px solid #e8e0d4;border-radius:14px;color:#1a1714;font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.75;padding:20px 22px;resize:none;min-height:140px;margin-bottom:36px;outline:none;transition:border-color 0.2s;}
+textarea::placeholder{color:#c8bfb0;}
+textarea:focus{border-color:#b8883a;}
+.btn-row{display:flex;align-items:center;margin-top:auto;gap:16px;}
+.btn-back{background:transparent;border:none;color:#a09080;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;transition:color 0.15s;}
+.btn-back:hover{color:#6a6058;}
+.btn-next{background:#b8883a;border:none;color:#ffffff;font-size:15px;font-weight:500;padding:14px 32px;border-radius:100px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-left:auto;transition:background 0.18s,box-shadow 0.18s;}
+.btn-next:hover{background:#cb9a48;box-shadow:0 0 0 4px rgba(184,136,58,0.18);}
+.btn-next:disabled{background:#e8e0d4;color:#a09080;cursor:not-allowed;box-shadow:none;}
+#emailgate{align-items:center;justify-content:center;text-align:center;padding:48px 0;}
+.gate-eyebrow{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#b8883a;margin-bottom:20px;display:block;}
+.gate-headline{font-family:'Playfair Display',serif;font-size:44px;color:#1a1714;margin-bottom:16px;font-weight:400;line-height:1.1;}
+.gate-sub{font-size:15px;color:#8a7d72;margin-bottom:36px;line-height:1.65;max-width:360px;}
+.email-input{width:100%;max-width:440px;background:#ffffff;border:1.5px solid #e8e0d4;border-radius:12px;color:#1a1714;font-family:'DM Sans',sans-serif;font-size:15px;padding:18px 22px;outline:none;margin-bottom:12px;text-align:center;display:block;margin-left:auto;margin-right:auto;transition:border-color 0.2s;}
+.email-input:focus{border-color:#b8883a;}
+.email-input::placeholder{color:#c8bfb0;}
+.btn-gate{display:block;width:100%;max-width:440px;margin:0 auto;background:#b8883a;border:none;color:#ffffff;font-size:15px;font-weight:500;padding:18px;border-radius:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.18s,box-shadow 0.18s;}
+.btn-gate:hover{background:#cb9a48;box-shadow:0 0 0 4px rgba(184,136,58,0.18);}
+.btn-gate:disabled{background:#e8e0d4;color:#a09080;cursor:not-allowed;box-shadow:none;}
+.spinner{width:40px;height:40px;border:2px solid #e8e0d4;border-top-color:#b8883a;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:32px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-title{font-family:'Playfair Display',serif;font-size:28px;color:#1a1714;margin-bottom:8px;text-align:center;font-weight:400;}
+.loading-working{font-size:13px;color:#a09080;margin-bottom:36px;text-align:center;}
+.loading-steps{width:100%;display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
+.loading-step{background:#ffffff;border:1px solid #e8e0d4;border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:14px;}
+.step-text{font-size:14px;color:#6a6058;}
+.tip-card{background:#ffffff;border:1px solid #e8e0d4;border-radius:12px;padding:24px 28px;text-align:center;width:100%;}
+.tip-label{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:#b8883a;margin-bottom:12px;}
+.tip-text{font-size:15px;color:#6a6058;line-height:1.7;transition:opacity 0.4s;}
+.tip-dots{display:flex;justify-content:center;gap:6px;margin-top:16px;}
+.tip-dot{width:5px;height:5px;border-radius:50%;background:#e8e0d4;}
+.tip-dot.active{background:#b8883a;}
+#result{display:none;flex-direction:column;}
+#result.active{display:flex;}
+.result-hero{text-align:center;margin-bottom:40px;padding-bottom:40px;border-bottom:1px solid #e8e0d4;}
+.result-eyebrow{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#b8883a;margin-bottom:20px;display:block;}
+.result-hero-head{font-family:'Playfair Display',serif;font-size:38px;color:#1a1714;margin-bottom:10px;font-weight:400;line-height:1.15;}
+.result-hero-sub{font-size:14px;color:#a09080;}
+.result-block{background:#ffffff;border:1px solid #e8e0d4;border-radius:16px;padding:28px 32px;margin-bottom:12px;}
+.rb-label{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:#b8883a;margin-bottom:20px;display:block;}
+.title-option{display:flex;align-items:flex-start;gap:18px;padding:16px 0;border-bottom:1px solid #f0e8dc;}
+.title-option:last-child{border-bottom:none;padding-bottom:0;}
+.title-num{font-size:12px;color:#b8883a;font-weight:500;min-width:22px;padding-top:4px;}
+.title-text{font-family:'Playfair Display',serif;font-size:21px;color:#1a1714;line-height:1.3;}
+.rb-body{font-size:15px;color:#6a6058;line-height:1.8;}
+.book-type-pill{display:inline-block;padding:5px 14px;border-radius:100px;font-size:12px;font-weight:500;background:#fdf6ea;color:#8a6f4a;border:1px solid #d4b87d;margin-bottom:16px;}
+.chapter-row{padding:18px 0;border-bottom:1px solid #f0e8dc;}
+.chapter-row:last-child{border-bottom:none;padding-bottom:0;}
+.ch-num{font-size:11px;color:#b8883a;letter-spacing:0.1em;margin-bottom:7px;text-transform:uppercase;}
+.ch-title{font-family:'Playfair Display',serif;font-size:18px;color:#1a1714;margin-bottom:6px;}
+.ch-desc{font-size:13px;color:#8a7d72;line-height:1.65;}
+.diff-quote{border-left:2px solid #b8883a;padding-left:22px;margin-top:4px;}
+.diff-text{font-family:'Playfair Display',serif;font-size:17px;color:#6a6058;line-height:1.8;font-style:italic;}
+.cta-block{background:#1a1714;border-radius:16px;padding:48px 40px;text-align:center;margin-top:12px;}
+.cta-eyebrow{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#b8883a;margin-bottom:20px;display:block;}
+.cta-head{font-family:'Playfair Display',serif;font-size:30px;color:#f0ece4;margin-bottom:14px;font-weight:400;line-height:1.2;}
+.cta-body{font-size:15px;color:#8a7d72;line-height:1.7;margin-bottom:32px;max-width:360px;margin-left:auto;margin-right:auto;}
+.btn-cta{background:#b8883a;border:none;color:#ffffff;font-size:15px;font-weight:500;padding:16px 40px;border-radius:100px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.18s,box-shadow 0.18s;}
+.btn-cta:hover{background:#cb9a48;box-shadow:0 0 0 4px rgba(184,136,58,0.25);}
+.btn-restart{width:100%;background:transparent;border:1px solid #e8e0d4;border-radius:12px;color:#a09080;font-size:14px;padding:16px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:10px;transition:all 0.15s;}
+.btn-restart:hover{border-color:#c8bfb0;color:#6a6058;}
+.powered{text-align:center;font-size:12px;color:#c8bfb0;margin-top:20px;}
+.powered span{color:#a09080;}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="screen active" id="landing">
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 0 32px;">
+    <div class="landing-badge">A free tool from Amplify Authentic</div>
+    <h1 class="landing-headline">You already have<br><em>a book.</em></h1>
+    <p class="landing-sub">Most podcasters, bloggers, and newsletter writers don't realize it.</p>
+    <p class="landing-sub2">This tool helps you find it.</p>
+    <button class="btn-amber" onclick="goTo('q1')">See My Book</button>
+  </div>
+</div>
+
+<div class="screen" id="q1">
+  <div class="progress-wrap">
+    <div class="progress-top"><span class="progress-label">1 of 8</span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:12.5%"></div></div>
+  </div>
+  <div class="q-text">What kind of content do you have?</div>
+  <div class="q-sub">Pick everything that applies.</div>
+  <div class="chips" id="q1chips">
+    <button class="chip" data-val="podcast">Podcast</button>
+    <button class="chip" data-val="blog">Blog</button>
+    <button class="chip" data-val="newsletter">Newsletter</button>
+    <button class="chip" data-val="social">Social media</button>
+  </div>
+  <div class="btn-row"><button class="btn-next" id="n1" disabled onclick="goTo('q2')">Continue</button></div>
+</div>
+
+<div class="screen" id="q2">
+  <div class="progress-wrap">
+    <div class="progress-top"><span class="progress-label">2 of 8</span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+  </div>
+  <div class="q-text">How much of it exists?</div>
+  <div class="q-sub">A rough sense is fine.</div>
+  <div class="radio-cards" id="q2cards">
+    <div class="radio-card" data-val="handful" onclick="selCard('q2cards',this,'n2')">
+      <div class="rc-title">A handful of pieces</div>
+      <div class="rc-sub">Enough to know there's something here, not yet a full archive</div>
+    </div>
+    <div class="radio-card" data-val="1-2years" onclick="selCard('q2cards',this,'n2')">
+      <div class="rc-title">One or two years' worth</div>
+      <div class="rc-sub">A real body of work with some depth to it</div>
+    </div>
+    <div class="radio-card" data-val="3plus" onclick="selCard('q2cards',this,'n2')">
+      <div class="rc-title">Three or more years</div>
+      <div class="rc-sub">You've been doing this long enough that people call you consistent</div>
+    </div>
+  </div>
+  <div class="btn-row">
+    <button class="btn-back" onclick="goTo('q1')">Back</button>
+    <button class="btn-next" id="n2" disabled onclick="goTo('q3')">Continue</button>
+  </div>
+</div>
+
+<div class="screen" id="q3">
+  <div class="progress-wrap">
+    <div class="progress-top"><span class="progress-label">3 of 8</span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:37.5%"></div></div>
+  </div>
+  <div class="q-text">What do you make it about?</div>
+  <div class="q-sub">Describe your content in a sentence or two. What's the topic, the tone, the reason you started?</div>
+  <textarea id="t3" placeholder="I started my podcast because..." oninput="chkTA('t3','n3')"></textarea>
+  <div class="btn-row">
+    <button class="btn-back" onclick="goTo('q2')">Back</button>
+    <button class="btn-next" id="n3" disabled onclick="goTo('q4')">Continue</button>
+  </div>
+</div>
+
+<div class="screen" id="q4">
+  <div class="progress-wrap">
+    <div class="progress-top"><span class="progress-label">4 of 8</span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+  </div>
+  <div class="q-text">What keeps coming up whether you planned it or not?</div>
+  <div class="q-sub">Is there a theme, idea, or belief that keeps showing up, even when you didn't plan it?</div>
+  <textarea id="t4" placeholder="I keep coming back to..." oninput="chkTA('t4','n4')"></textarea>
+  <div class="btn-row">
+    <button class="btn-back" onclick="goTo('q3')">Back</button>
+    <button class="btn-next" id="n4" disabled onclick="goTo('q5')">Continue</button>
+  </div>
+</div>
+
+<div class="screen" id="q5">
+  <div class="progress-wrap">
+    <div class="progress-top"><span class="progress-label">5 of 8</span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:62.5%"></div></div>
+  </div>
+  <div class="q-text">Who is your audience? Why do they keep coming back?</div>
+  <div class="q-sub">Who listens, reads, or follows? What do they tell you they get out of it?</div>
+  <textarea id="t5" placeholder="My audience is mostly..." oninput="chkTA('t5','n5')"></textarea>
+  <div class="btn-row">
+    <button class="btn-back" onclick="goTo('q4')">Back</button>
+    <button class="btn-next" id="n5" disabled onclick="goTo('q6')">Continue</button>
+  </div>
+</div>
+
+<div class="screen" id="q6">
+  <div class="progress-wrap">
+    <div class="progress-top"><span class="progress-label">6 of 8</span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+  </div>
+  <div class="q-text">What do you want a reader to walk away believing or doing?</div>
+  <div class="q-sub">Not a listener or subscriber. A reader. Someone who finishes your book at 11pm and sets it on the nightstand. What just changed for them?</div>
+  <textarea id="t6" placeholder="I want them to believe..." oninput="chkTA('t6','n6')"></textarea>
+  <div class="btn-row">
+    <button class="btn-back" onclick="goTo('q5')">Back</button>
+    <button class="btn-next" id="n6" disabled onclick="goTo('q7')">Continue</button>
+  </div>
+</div>
+
+<div class="screen" id="q7">
+  <div class="progress-wrap">
+    <div class="progress-top"><span class="progress-label">7 of 8</span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:87.5%"></div></div>
+  </div>
+  <div class="q-text">Which sounds more like your book?</div>
+  <div class="q-sub">Trust your gut. There's no wrong answer here.</div>
+  <div class="radio-cards" id="q7cards">
+    <div class="radio-card" data-val="stories" onclick="selCard('q7cards',this,'n7')">
+      <div class="rc-title">A collection of stories connected by a common thread</div>
+      <div class="rc-sub">Each chapter is its own world, but they all point somewhere</div>
+    </div>
+    <div class="radio-card" data-val="thesis" onclick="selCard('q7cards',this,'n7')">
+      <div class="rc-title">One big idea, argued across many chapters</div>
+      <div class="rc-sub">You have a belief to defend and evidence to back it up</div>
+    </div>
+    <div class="radio-card" data-val="unknown" onclick="selCard('q7cards',this,'n7')">
+      <div class="rc-title">I have no idea. That's why I'm here.</div>
+      <div class="rc-sub">Let the tool decide based on what I've shared</div>
+    </div>
+  </div>
+  <div class="btn-row">
+    <button class="btn-back" onclick="goTo('q6')">Back</button>
+    <button class="btn-next" id="n7" disabled onclick="goTo('q8')">Continue</button>
+  </div>
+</div>
+
+<div class="screen" id="q8">
+  <div class="progress-wrap">
+    <div class="progress-top"><span class="progress-label">8 of 8</span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+  </div>
+  <div class="q-text">Paste 5 titles.</div>
+  <div class="q-sub">Your most recent, your favorites, or a mix. Whatever comes to mind first.</div>
+  <textarea id="t8" placeholder="1.&#10;2.&#10;3.&#10;4.&#10;5." style="min-height:160px;" oninput="chkTA('t8','n8')"></textarea>
+  <div class="btn-row">
+    <button class="btn-back" onclick="goTo('q7')">Back</button>
+    <button class="btn-next" id="n8" disabled onclick="goTo('emailgate')">Continue</button>
+  </div>
+</div>
+
+<div class="screen" id="emailgate">
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 0;">
+    <span class="gate-eyebrow">Almost there</span>
+    <h2 class="gate-headline">Your book is<br>almost ready.</h2>
+    <p class="gate-sub">Drop your email and we'll send you the full plan.</p>
+    <input class="email-input" type="email" id="emailval" placeholder="you@email.com" oninput="chkEmail()">
+    <button class="btn-gate" id="unlockbtn" disabled onclick="submitForm()">Unlock My Book</button>
+    <button class="btn-back" onclick="goTo('q8')" style="margin-top:24px;">Back</button>
+  </div>
+</div>
+
+<div class="screen" id="loading">
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 0;">
+    <div class="spinner"></div>
+    <div class="loading-title">Your book is on its way.</div>
+    <div class="loading-working">Working on it...</div>
+    <div class="loading-steps">
+      <div class="loading-step"><span style="font-size:18px;margin-right:8px;">&#128218;</span><span class="step-text">Finding the book in your content</span></div>
+      <div class="loading-step"><span style="font-size:18px;margin-right:8px;">&#9999;&#65039;</span><span class="step-text">Building your title options</span></div>
+      <div class="loading-step"><span style="font-size:18px;margin-right:8px;">&#128204;</span><span class="step-text">Mapping your chapter-by-chapter outline</span></div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-label" id="tiplabel">Something to Remember</div>
+      <div class="tip-text" id="tiptext">Don't think about writing a book. Think about your next 12 episodes or posts. Those are your chapters. Once you have them, you're most of the way there.</div>
+      <div class="tip-dots">
+        <div class="tip-dot active" id="d0"></div>
+        <div class="tip-dot" id="d1"></div>
+        <div class="tip-dot" id="d2"></div>
+        <div class="tip-dot" id="d3"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="result">
+  <div class="result-hero">
+    <span class="result-eyebrow">Your Book Plan</span>
+    <div class="result-hero-head">Here's what your book could be.</div>
+    <div class="result-hero-sub">Personalized based on your answers and ready to use.</div>
+  </div>
+  <div id="resultcontent"></div>
+  <div class="cta-block">
+    <span class="cta-eyebrow">Work with Brady</span>
+    <div class="cta-head">Your book is waiting<br>to be written.</div>
+    <p class="cta-body">You have the plan. Now comes the part most people never get past: putting words on the page. Amplify Authentic works with authors who have the ideas but need a pro to bring them to life.</p>
+    <button class="btn-cta" onclick="window.location.href='mailto:brady@bradyross.com?subject=Already a Book'">Work with Us</button>
+  </div>
+  <button class="btn-restart" onclick="restart()">Start over</button>
+  <div class="powered">Powered by <span>Amplify Authentic</span></div>
+</div>
+
+</div>
+<script>
+const A = {};
+const tips = [
+  { label: 'Something to Remember', text: "Don't think about writing a book. Think about your next 12 episodes or posts. Those are your chapters. Once you have them, you're most of the way there." },
+  { label: 'Something to Remember', text: "The audience you've been building? They're not just listeners or readers. They're your first buyers, your early reviewers, the people who will tell others. The book already has a market." },
+  { label: 'Something to Remember', text: "Your readers aren't waiting for you to say something entirely new. They're waiting for you to say something important, in your voice, in a way that gets them thinking and moves them to act. You don't have to have all the answers. You just have to be willing to share what you know." },
+  { label: 'Something to Remember', text: "You don't find your book's big idea by thinking harder. You find it by looking at what you've already said, over and over, without realizing it." }
+];
+let tipIdx = 0, tipInt = null;
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+function selCard(groupId, el, btnId) {
+  document.querySelectorAll('#' + groupId + ' .radio-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  A[groupId] = el.dataset.val;
+  document.getElementById(btnId).disabled = false;
+}
+function chkTA(inputId, btnId) {
+  const v = document.getElementById(inputId).value.trim();
+  document.getElementById(btnId).disabled = v.length < 8;
+  A[inputId] = v;
+}
+function chkEmail() {
+  const v = document.getElementById('emailval').value.trim();
+  document.getElementById('unlockbtn').disabled = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  A.email = v;
+}
+(function () {
+  document.querySelectorAll('#q1chips .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      chip.classList.toggle('selected');
+      document.getElementById('n1').disabled = !document.querySelector('#q1chips .chip.selected');
+      A.q1 = Array.from(document.querySelectorAll('#q1chips .chip.selected')).map(c => c.dataset.val).join(', ');
+    });
+  });
+})();
+function startTips() {
+  tipIdx = 0;
+  tipInt = setInterval(() => {
+    tipIdx = (tipIdx + 1) % tips.length;
+    const textEl = document.getElementById('tiptext');
+    const labelEl = document.getElementById('tiplabel');
+    textEl.style.opacity = 0;
+    setTimeout(() => {
+      textEl.textContent = tips[tipIdx].text;
+      labelEl.textContent = tips[tipIdx].label;
+      textEl.style.opacity = 1;
+    }, 400);
+    for (let i = 0; i < 4; i++) document.getElementById('d' + i).classList.toggle('active', i === tipIdx);
+  }, 4000);
+}
+async function submitForm() {
+  goTo('loading');
+  startTips();
+  const prompt = `You are an experienced book editor helping a content creator discover the book hiding in their existing work.
+
+Based on their answers, generate a complete book plan. Return ONLY valid JSON -- no markdown, no preamble.
+
+THEIR ANSWERS:
+Content type: ${A.q1 || ''}
+Volume: ${A.q2cards || ''}
+What they make it about: ${A.t3 || ''}
+Recurring themes: ${A.t4 || ''}
+Audience: ${A.t5 || ''}
+What they want readers to walk away believing: ${A.t6 || ''}
+Book model preference: ${A.q7cards || ''} -- if "unknown", decide confidently, no hedging.
+Sample titles from their content: ${A.t8 || ''}
+
+Return this exact JSON:
+{
+  "bookType": "stories or thesis",
+  "bookTypeLabel": "A collection of stories or A thesis-driven book",
+  "bookTypeExplanation": "2-3 sentences. Confident. If unknown, make the call and explain why.",
+  "titles": ["Title One", "Title Two", "Title Three"],
+  "premise": "One sentence. The book in its clearest form.",
+  "readerProfile": "2-3 sentences. Who this book is for and why they need it.",
+  "chapters": [{"number": 1, "title": "Chapter Title", "description": "One sentence -- what this chapter does for the reader."}],
+  "uniqueAngle": "2-3 sentences. What makes this book different. Specific, earned, not invented."
+}
+
+6-8 chapters. Draw from their sample titles. Warm, confident editorial voice.`;
+
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: A.email,
+        userAnswers: {
+          'Content type': A.q1 || '',
+          'Volume': A.q2cards || '',
+          'About': A.t3 || '',
+          'Recurring themes': A.t4 || '',
+          'Audience': A.t5 || '',
+          'Walk away believing': A.t6 || '',
+          'Book model': A.q7cards || '',
+          'Sample titles': A.t8 || ''
+        },
+        model: 'claude-sonnet-4-5',
+        max_tokens: 1500,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    if (!res.ok) throw new Error('API error ' + res.status);
+    const data = await res.json();
+    const raw = data.content.find(b => b.type === 'text')?.text || '';
+    const match = raw.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error('No JSON found');
+    const parsed = JSON.parse(match[0]);
+    clearInterval(tipInt);
+    renderResult(parsed);
+  } catch (e) {
+    clearInterval(tipInt);
+    renderResult(null);
+  }
+}
+function renderResult(d) {
+  goTo('result');
+  if (!d) {
+    document.getElementById('resultcontent').innerHTML = '<div class="result-block"><p class="rb-body">Something went wrong. Please try again.</p></div>';
+    return;
+  }
+  let h = '';
+  h += `<div class="result-block"><span class="rb-label">Title Options</span>${d.titles.map((t, i) => `<div class="title-option"><span class="title-num">0${i + 1}</span><span class="title-text">${t}</span></div>`).join('')}</div>`;
+  h += `<div class="result-block"><span class="rb-label">Core Premise</span><p class="rb-body" style="font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:#4a4038;">${d.premise}</p></div>`;
+  h += `<div class="result-block"><span class="rb-label">Your Reader</span><p class="rb-body">${d.readerProfile}</p></div>`;
+  h += `<div class="result-block"><span class="rb-label">What Kind of Book This Is</span><div class="book-type-pill">${d.bookTypeLabel}</div><p class="rb-body">${d.bookTypeExplanation}</p></div>`;
+  h += `<div class="result-block"><span class="rb-label">Chapter by Chapter</span>${d.chapters.map(c => `<div class="chapter-row"><div class="ch-num">Chapter ${String(c.number).padStart(2, '0')}</div><div class="ch-title">${c.title}</div><div class="ch-desc">${c.description}</div></div>`).join('')}</div>`;
+  h += `<div class="result-block"><span class="rb-label">What Makes It Different</span><div class="diff-quote"><p class="diff-text">${d.uniqueAngle}</p></div></div>`;
+  document.getElementById('resultcontent').innerHTML = h;
+}
+function restart() { location.reload(); }
+</script>
+</body>
+</html>
